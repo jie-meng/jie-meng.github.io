@@ -1,5 +1,5 @@
 ---
-title: Make cocos2dx-js modulization by webpack2
+title: Make cocos2dx-js modulization with webpack2
 layout: post
 date: '2017-12-21 22:25:01 +0800'
 categories: cocos2dx
@@ -12,7 +12,7 @@ It is really easy to make small games with cocos2dx-js. But while project scale 
 
 Then it's time to make cocos2dx-js project modulization.
 
-Here's the steps of how to make cocos2dx-js modulization with webpack2.
+Here are the steps of how to make cocos2dx-js modulization with webpack2.
 
 ### 1. Create cocos2dx-js project
 
