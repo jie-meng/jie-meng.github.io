@@ -20,6 +20,8 @@ gem "github-pages"
 
 gem 'jekyll-admin', group: :jekyll_plugins
 
+gem 'jekyll-seo-tag'
+
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
