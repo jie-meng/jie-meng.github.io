@@ -172,7 +172,7 @@ export default {
 Then you can type `npm start` in your command line.
 A few seconds later, you would see the image below, congratulations!
 
-![]({{ "/assets/img/cocos2dx.png" | absolute_url }})
+![]({{ "/assets/img/cocos2dx.webp" | absolute_url }})
 
 Enjoy modulization of cocos2dx-js now.
 
