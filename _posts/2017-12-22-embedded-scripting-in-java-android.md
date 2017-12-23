@@ -1,5 +1,5 @@
 ---
-title: Embedded scripting on Java/Android
+title: Embedded scripting in Java/Android
 layout: post
 date: '2017-12-23 01:06:00 +0800'
 categories: android
@@ -7,7 +7,7 @@ categories: android
 
 ## TASK 1
 
-Here comes a task, its requirement is:
+Here comes a task, the requirements are:
 
 - Make a ChatBot program. 
 - We can talk to him, and he would respond as pre-defined scene.
@@ -17,7 +17,7 @@ Here comes a task, its requirement is:
 ### A simple scene
 ![]({{ "/assets/img/embedded-scripting-on-java-android/a-simple-scene.webp" | absolute_url }})
 
-Then you write code v1.0
+Here might be your code v1.0 looks like:
 
 {% highlight java %}
 public class ChatBot {
@@ -80,10 +80,7 @@ public class ChatBot {
 }
 {% endhighlight %}
 
-### A new scene added
-![]({{ "/assets/img/embedded-scripting-on-java-android/a-new-scene-added.webp" | absolute_url }})
-
-Things become more and more complicate, then you would extract the mutable logic:
+Things become more and more complicate, then you may want to extract the mutable logic:
 
 ![]({{ "/assets/img/embedded-scripting-on-java-android/application-structure.webp" | absolute_url }})
 
