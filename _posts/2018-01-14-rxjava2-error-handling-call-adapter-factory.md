@@ -164,12 +164,14 @@ Then use it as
 
 {% highlight java %}
 
-new Retrofit.Builder()
+public Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    return new Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create(RxJava2CallAdapterFactory.create(), gson))
             .build();
+}
 
 {% endhighlight %}
 
