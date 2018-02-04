@@ -22,7 +22,7 @@ The first thing you need to do is define a Launcher style in style.xml.
     <item name="android:windowBackground">@drawable/splash_screen</item>
 </style>
 
-<% endhighlight %>
+{% endhighlight %}
 
 Then use the theme in MainActivity (Your launcher Activity).
 
@@ -41,13 +41,13 @@ Then use the theme in MainActivity (Your launcher Activity).
 
 {% endhighlight %}
 
+Then Implement MainActivity. Reset theme after show Splash screen for 1500 ms.
+
 {% highlight java %}
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String ARG_SHOW_LOGIN = "arg_show_login";
-    
-    ...
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    ...
-    
 }
 
 {% endhighlight %}
