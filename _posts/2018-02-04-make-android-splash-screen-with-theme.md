@@ -1,5 +1,5 @@
 ---
-title: Make Android splash with theme
+title: Make Android splash screen with theme
 layout: post
 date: 2018-02-04 10:57:03 +0800
 categories: android
