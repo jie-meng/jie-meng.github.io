@@ -15,7 +15,7 @@ First of all, you got an API contract:
 
 {% highlight java %}
 private interface SomeApi {
-    @GET("/user/{user_id}/cards")
+    @GET("user/{user_id}/cards")
     Single<Response<List<Card>>> getCards(@Path("user_id") String userId, @Query(value = "query", encoded = true) Filter filter);
 }
 {% endhighlight %}
