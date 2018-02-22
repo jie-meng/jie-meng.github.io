@@ -47,6 +47,16 @@ graph TD;
 
 {% endhighlight %}
 
+Then you would see:
+
+<div class="mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
+
 ## References
 
 [Adding graphs via Mermaid](https://github.com/gnab/remark/wiki/Adding-graphs-via-Mermaid)
