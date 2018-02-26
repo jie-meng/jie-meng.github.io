@@ -63,3 +63,5 @@ graph TD;
 
 [Embed Mermaid Charts in Jekyll without Plugin](http://kkpattern.github.io/2015/05/15/Embed-Chart-in-Jekyll.html)
 
+[Mermaid Doc](https://mermaidjs.github.io)
+
