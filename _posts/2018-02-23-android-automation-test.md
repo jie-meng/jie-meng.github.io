@@ -220,7 +220,7 @@ username.perform(click(), replaceText("abcd"));
 
 {% endhighlight %}
 
-- Check result
+- Checking result
 
 {% highlight java %}
 
@@ -232,7 +232,7 @@ You can write test code with [Espresso cheat sheet](https://developer.android.co
 
 ### Testing UI for Multiple Apps
 
-Although Espresso is powerfull and easy to use, it cannot test the scenario: Press home button to make App switch to background, and switch it back from launcher. (If you want to check if data is displayed same as before you switch to background).
+Although Espresso is powerful and easy to use, it cannot test the scenario: Press home button to make App switch to background, and switch it back from launcher. (If you want to check if data is displayed same as before you switch to background).
 
 Then you can use UIAutomator to cover the shortage of Espresso.
 
