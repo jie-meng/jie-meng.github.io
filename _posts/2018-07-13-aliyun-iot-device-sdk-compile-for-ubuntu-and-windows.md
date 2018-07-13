@@ -1,5 +1,5 @@
 ---
-title: aliyun-iot device sdk compile for ubuntu16.04 / windows
+title: aliyun-iot device sdk compile for ubuntu and windows
 layout: post
 date: 2018-07-13 09:42:43 +0800
 categories: iot
