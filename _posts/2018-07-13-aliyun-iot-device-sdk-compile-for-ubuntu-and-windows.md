@@ -49,7 +49,7 @@ os.system('docker run --rm -it -v {}:/app aliiotcrosscompile sh'.format(os.getcw
 
 {% endhighlight %}
 
-## Cross compile for windows on any OS with docker
+## Cross compile for ubuntu or windows on any OS with docker
 
 - Create cross compile image:
 
@@ -77,7 +77,7 @@ os.system('docker run --rm -it -v {}:/app aliiotcrosscompile sh'.format(os.getcw
 
     Type `exit` to quit container shell, output file is under directory **output/release/bin**.
 
-_ Help:
+- Help:
 
     - Execute `make env` in container shell, you can check current compile information.
 
