@@ -13,7 +13,8 @@ Before you begin flashing, you will need the following items in addition to your
 - Ethernet cable
 - MicroSD card reader
 - 8 GB or larger microSD card
-- Optional items:
+
+Optional items:
 
 - HDMI cable
 - HDMI-enabled display
