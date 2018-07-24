@@ -31,6 +31,13 @@ When Android Things system launcher started, you can configure its Network.
 
 Let PC connect to same network as Raspberry Pi 3, Use `adb connect <Raspberry IP>`, you can found device with `adb devices`.
 
+## How to set time of Raspberry Pi 3
+
+- adb root
+- adb shell settings put global ntp_server ntp1.aliyun.com
+- adb shell setprop persist.sys.timezone "Asia/Shanghai"
+- adb reboot
+
 ## Develop an APP
 
 Create an Android Things App with Android studio.
