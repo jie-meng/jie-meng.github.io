@@ -46,6 +46,24 @@ Open AndroidManifest.xml, change `<category android:name="android.intent.categor
 
 Install app to Raspberry 3 with Android Studio or adb.
 
+How to quit current APP? Connect the Raspberry Pi 3 with a keyboard, type **ESC** frequently, current APP would quit.
+
+## How to start an APP
+
+Use adb command:
+
+`adb shell am start -n {packageName}/{fullActivityName (with its package)}`
+
+## How to get screenshot:
+
+`adb shell screencap -p /sdcard/image.png`
+
+## Permissions
+
+You do not have settings on Android Things which let you change the permissions of an APP. But you can grant permissions through adb:
+
+`adb shell pm grant {packageName} android.permission.WRITE_EXTERNAL_STORAGE`
+
 ## References
 
 [Android Things on Raspberry Pi 3](https://developer.android.google.cn/things/hardware/raspberrypi)
