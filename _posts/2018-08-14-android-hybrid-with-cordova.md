@@ -270,6 +270,12 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 ![]({{ "/assets/img/cordova-plugin-dialogs.webp" | absolute_url }})
 
+## Proguard
+
+If you use proguard in release version, you would got `java.lang.RuntimeException: Failed to create webview.` when start a Cordova WebView.
+
+Add `-keep public class org.apache.cordova.** { *; }` in **proguard-rules.prod** would solve this problem.
+
 ## References
 
 [Cordova](https://cordova.apache.org/)
