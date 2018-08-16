@@ -221,7 +221,7 @@ We can copy config files, plugins simply from pure cordova project.
 
 ## Create first hybrid page in native App
 
-- Copy `platforms/android/app/src/main/com/apache/cordova/whitelist/WhitelistPlugin.java` from **cordova project** to **native project**. Do not change its package name.
+- Copy `platforms/android/app/src/main/java/org/apache/cordova/whitelist/WhitelistPlugin.java` from **cordova project** to **native project**. Do not change its package name.
 
 - Copy `platforms/android/app/src/main/res/xml/config.xml` from **cordova project** to **native project**.
 
@@ -280,7 +280,7 @@ Use alert dialog plugin as an example.
 
 - Execute `cordova plugin add cordova-plugin-dialogs` in **cordova project**.
 
-- Copy `platforms/android/app/src/main/com/apache/cordova/dialogs` from **cordova project** to **native project**. Do not change its package name.
+- Copy `platforms/android/app/src/main/java/org/apache/cordova/dialogs` from **cordova project** to **native project**. Do not change its package name.
 
 - Copy `platforms/android/src/assets/www/plugins/cordova-plugin-dialogs` from from **cordova project** to **native project**.
 
