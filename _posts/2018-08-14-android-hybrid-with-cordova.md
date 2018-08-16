@@ -21,7 +21,7 @@ Here are the new steps to build a hybrid Android App with cordova.
 
 ## Build a native Android project
 
-- Create a native Android project, use kotlin as example
+- Create a native Android project
 
 - Make sure its minSdkVersion not lower than 19.
 
@@ -31,137 +31,140 @@ Here are the new steps to build a hybrid Android App with cordova.
 
 - Write a class **ExtendCordovaConfigXmlParser** with which we can parse arbitrary config.xml:
 
-{% highlight kotlin %}
+{% highlight java %}
 
-import android.content.Context
-import org.apache.cordova.CordovaPreferences
-import org.apache.cordova.LOG
-import org.apache.cordova.PluginEntry
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
-import java.io.IOException
-import java.util.*
-import java.util.regex.Pattern
+import android.content.Context;
 
-class ExtendCordovaConfigXmlParser {
+import org.apache.cordova.CordovaPreferences;
+import org.apache.cordova.LOG;
+import org.apache.cordova.PluginEntry;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
-    companion object {
-        private val TAG = "ExtendCordovaConfigXmlParser"
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ExtendCordovaConfigXmlParser {
+    private static String TAG = "ExtendCordovaConfigXmlParser";
+    private String webPagePath;
+    private String launchUrl = webPagePath + "/index.html";
+    private CordovaPreferences prefs = new CordovaPreferences();
+    private ArrayList<PluginEntry> pluginEntries = new ArrayList(20);
+    boolean insideFeature = false;
+    String service = "";
+    String pluginClass = "";
+    String paramType = "";
+    boolean onload = false;
+
+    public ExtendCordovaConfigXmlParser(String webPagePath) {
+        this.webPagePath = webPagePath;
     }
 
-    var launchUrl = "file:///android_asset/www/index.html"
-    val preferences = CordovaPreferences()
-    val pluginEntries: ArrayList<PluginEntry> = ArrayList(20)
-    internal var insideFeature = false
-    internal var service = ""
-    internal var pluginClass = ""
-    internal var paramType = ""
-    internal var onload = false
+    public CordovaPreferences getPreferences() {
+        return this.prefs;
+    }
 
-    fun parse(action: Context) {
-        var id = action.resources.getIdentifier("config", "xml", action.javaClass.getPackage().name)
+    public ArrayList<PluginEntry> getPluginEntries() {
+        return this.pluginEntries;
+    }
+
+    public String getLaunchUrl() {
+        return this.launchUrl;
+    }
+
+    public void parse(Context action, String config) {
+        int id = action.getResources().getIdentifier(config, "xml", action.getClass().getPackage().getName());
         if (id == 0) {
-            id = action.resources.getIdentifier("config", "xml", action.packageName)
+            id = action.getResources().getIdentifier(config, "xml", action.getPackageName());
             if (id == 0) {
-                LOG.e(TAG, "res/xml/config.xml is missing!")
-                return
+                LOG.e(TAG, String.format("res/xml/%s.xml is missing!", config));
+                return;
             }
         }
 
-        this.parse(action.resources.getXml(id) as XmlPullParser)
+        this.parse(action.getResources().getXml(id));
     }
 
-    fun parse(action: Context, config: String) {
-        var id = action.resources.getIdentifier(config, "xml", action.javaClass.getPackage().name)
-        if (id == 0) {
-            id = action.resources.getIdentifier(config, "xml", action.packageName)
-            if (id == 0) {
-                LOG.e(TAG, "res/xml/$config.xml is missing!")
-                return
-            }
-        }
-
-        this.parse(action.resources.getXml(id) as XmlPullParser)
-    }
-
-    fun parse(xml: XmlPullParser) {
-        var eventType = -1
+    public void parse(XmlPullParser xml) {
+        int eventType = -1;
 
         while (eventType != 1) {
             if (eventType == 2) {
-                this.handleStartTag(xml)
+                this.handleStartTag(xml);
             } else if (eventType == 3) {
-                this.handleEndTag(xml)
+                this.handleEndTag(xml);
             }
 
             try {
-                eventType = xml.next()
-            } catch (var4: XmlPullParserException) {
-                var4.printStackTrace()
-            } catch (var5: IOException) {
-                var5.printStackTrace()
+                eventType = xml.next();
+            } catch (XmlPullParserException var4) {
+                var4.printStackTrace();
+            } catch (IOException var5) {
+                var5.printStackTrace();
             }
-
         }
-
     }
 
-    fun handleStartTag(xml: XmlPullParser) {
-        val strNode = xml.name
-        if (strNode == "feature") {
-            this.insideFeature = true
-            this.service = xml.getAttributeValue(null as String?, "name")
-        } else if (this.insideFeature && strNode == "param") {
-            this.paramType = xml.getAttributeValue(null as String?, "name")
-            if (this.paramType == "service") {
-                this.service = xml.getAttributeValue(null as String?, "value")
-            } else if (this.paramType != "package" && this.paramType != "android-package") {
-                if (this.paramType == "onload") {
-                    this.onload = "true" == xml.getAttributeValue(null as String?, "value")
+    public void handleStartTag(XmlPullParser xml) {
+        String strNode = xml.getName();
+        if (strNode.equals("feature")) {
+            this.insideFeature = true;
+            this.service = xml.getAttributeValue(null, "name");
+        } else if (this.insideFeature && strNode.equals("param")) {
+            this.paramType = xml.getAttributeValue(null, "name");
+            if (this.paramType.equals("service")) {
+                this.service = xml.getAttributeValue(null, "value");
+            } else if (!this.paramType.equals("package") && !this.paramType.equals("android-package")) {
+                if (this.paramType.equals("onload")) {
+                    this.onload = "true".equals(xml.getAttributeValue(null, "value"));
                 }
             } else {
-                this.pluginClass = xml.getAttributeValue(null as String?, "value")
+                this.pluginClass = xml.getAttributeValue(null, "value");
             }
         } else {
-            val src: String?
-            if (strNode == "preference") {
-                src = xml.getAttributeValue(null as String?, "name").toLowerCase(Locale.ENGLISH)
-                val value = xml.getAttributeValue(null as String?, "value")
-                this.preferences.set(src, value)
-            } else if (strNode == "content") {
-                src = xml.getAttributeValue(null as String?, "src")
+            String src;
+            if (strNode.equals("preference")) {
+                src = xml.getAttributeValue(null, "name").toLowerCase(Locale.ENGLISH);
+                String value = xml.getAttributeValue(null, "value");
+                this.prefs.set(src, value);
+            } else if (strNode.equals("content")) {
+                src = xml.getAttributeValue(null, "src");
                 if (src != null) {
-                    this.setStartUrl(src)
+                    this.setStartUrl(src);
                 }
             }
         }
-
     }
 
-    fun handleEndTag(xml: XmlPullParser) {
-        val strNode = xml.name
-        if (strNode == "feature") {
-            this.pluginEntries.add(PluginEntry(this.service, this.pluginClass, this.onload))
-            this.service = ""
-            this.pluginClass = ""
-            this.insideFeature = false
-            this.onload = false
+    public void handleEndTag(XmlPullParser xml) {
+        String strNode = xml.getName();
+        if (strNode.equals("feature")) {
+            this.pluginEntries.add(new PluginEntry(this.service, this.pluginClass, this.onload));
+            this.service = "";
+            this.pluginClass = "";
+            this.insideFeature = false;
+            this.onload = false;
+        }
+    }
+
+    private void setStartUrl(String src) {
+        if (src == null) {
+            return;
         }
 
-    }
-
-    private fun setStartUrl(src: String) {
-        var copysrc = src
-        val schemeRegex = Pattern.compile("^[a-z-]+://")
-        val matcher = schemeRegex.matcher(copysrc)
+        Pattern schemeRegex = Pattern.compile("^[a-z-]+://");
+        Matcher matcher = schemeRegex.matcher(src);
         if (matcher.find()) {
-            this.launchUrl = copysrc
+            this.launchUrl = src;
         } else {
-            if (copysrc[0] == '/') {
-                copysrc = copysrc.substring(1)
+            if (src.charAt(0) == '/') {
+                src = src.substring(1);
             }
 
-            this.launchUrl = "file:///android_asset/www/$copysrc"
+            this.launchUrl = webPagePath + "/" + src;
         }
     }
 }
@@ -170,33 +173,39 @@ class ExtendCordovaConfigXmlParser {
 
 - Write a class **ExtendCordovaActivity** with which we can build hybrid page easily:
 
-{% highlight kotlin %}
+{% highlight java %}
 
-import android.os.Bundle
-import org.apache.cordova.CordovaActivity
+import android.os.Bundle;
 
-abstract class ExtendCordovaActivity : CordovaActivity() {
+import org.apache.cordova.CordovaActivity;
 
-    abstract fun getConfig(): String
+public abstract class ExtendCordovaActivity extends CordovaActivity {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    public abstract String getConfig();
 
-        val extras = intent.extras
+    public abstract String getWebPagePath();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadConfig();
+
+        Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
-            moveTaskToBack(true)
+            moveTaskToBack(true);
         }
 
-        loadUrl(launchUrl)
+        loadUrl(launchUrl);
     }
 
-    override fun loadConfig() {
-        val parser = ExtendCordovaConfigXmlParser()
-        parser.parse(this, getConfig())
-        this.preferences = parser.preferences
-        this.preferences.setPreferencesBundle(this.intent.extras)
-        this.launchUrl = parser.launchUrl
-        this.pluginEntries = parser.pluginEntries
+    @Override
+    protected void loadConfig() {
+        ExtendCordovaConfigXmlParser parser = new ExtendCordovaConfigXmlParser(getWebPagePath());
+        parser.parse(this, getConfig());
+        this.preferences = parser.getPreferences();
+        this.preferences.setPreferencesBundle(getIntent().getExtras());
+        this.launchUrl = parser.getLaunchUrl();
+        this.pluginEntries = parser.getPluginEntries();
     }
 }
 
@@ -218,22 +227,46 @@ We can copy config files, plugins simply from pure cordova project.
 
 - Copy `platforms/android/app/src/assets/www` from from **cordova project** to **native project**.
 
+- Create `WebPagePath` which can switch web page directory.
+
+{% highlight java %}
+
+import com.jmengxy.cordovadroid.base.ExtendCordovaActivity;
+import com.jmengxy.cordovadroid.definitions.WebPagePath;
+
+import com.jmengxy.cordovadroid.BuildConfig;
+
+public class WebPagePath {
+    public static final String ASSETS = "file:///android_asset/www";
+    public static final String INTERNAL_STORAGE = "file:///sdcard/Android/data/" + BuildConfig.APPLICATION_ID + "/www";
+    public static final String EXTERNAL_STORAGE = "file:///sdcard/CordovaDroid/www";
+}
+
+{% endhighlight %}
+
 - Create an Activity **IndexActivity**.
 
-{% highlight kotlin %}
+{% highlight java %}
 
-import com.example.native.base.ExtendCordovaActivity
+import com.jmengxy.cordovadroid.base.ExtendCordovaActivity;
+import com.jmengxy.cordovadroid.definitions.WebPagePath;
 
-class IndexActivity : ExtendCordovaActivity() {
+public class IndexActivity extends ExtendCordovaActivity {
 
-    override fun getConfig(): String {
-        return "index"
+    @Override
+    public String getConfig() {
+        return "index";
+    }
+
+    @Override
+    public String getWebPagePath() {
+        return WebPagePath.ASSETS;
     }
 }
 
 {% endhighlight %}
 
-- Create a config file **index.xml** in `app/src/main/res/xml/` of **native project**. Copy content from **config.xml**, change widget id to package name of IndexActivity. `<content src="index.html" />` points to `assets/www/index.html`.
+- Create a config file **index.xml** in `app/src/main/res/xml/` of **native project**. Copy content from **config.xml**, change widget id to package name of IndexActivity. `<content src="index.html" />` points to `{web page directory}/index.html`.
 
 - Make a button in MainActivity which jump to IndexActivity.
 
@@ -275,6 +308,8 @@ document.addEventListener("deviceready", onDeviceReady, false);
 If you use proguard in release version, you would got `java.lang.RuntimeException: Failed to create webview.` when start a Cordova WebView.
 
 Add `-keep public class org.apache.cordova.** { *; }` in **proguard-rules.prod** would solve this problem.
+
+[Github Repo](https://github.com/jie-meng/CordovaDroid)
 
 ## References
 
