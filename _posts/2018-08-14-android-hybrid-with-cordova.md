@@ -33,20 +33,6 @@ Here are the new steps to build a hybrid Android App with cordova.
 
 {% highlight java %}
 
-import android.content.Context;
-
-import org.apache.cordova.CordovaPreferences;
-import org.apache.cordova.LOG;
-import org.apache.cordova.PluginEntry;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class ExtendCordovaConfigXmlParser {
     private static String TAG = "ExtendCordovaConfigXmlParser";
     private String webPagePath;
@@ -175,10 +161,6 @@ public class ExtendCordovaConfigXmlParser {
 
 {% highlight java %}
 
-import android.os.Bundle;
-
-import org.apache.cordova.CordovaActivity;
-
 public abstract class ExtendCordovaActivity extends CordovaActivity {
 
     public abstract String getConfig();
@@ -231,11 +213,6 @@ We can copy config files, plugins simply from pure cordova project.
 
 {% highlight java %}
 
-import com.jmengxy.cordovadroid.base.ExtendCordovaActivity;
-import com.jmengxy.cordovadroid.definitions.WebPagePath;
-
-import com.jmengxy.cordovadroid.BuildConfig;
-
 public class WebPagePath {
     public static final String ASSETS = "file:///android_asset/www";
     public static final String INTERNAL_STORAGE = "file:///sdcard/Android/data/" + BuildConfig.APPLICATION_ID + "/www";
@@ -247,9 +224,6 @@ public class WebPagePath {
 - Create an Activity **IndexActivity**.
 
 {% highlight java %}
-
-import com.jmengxy.cordovadroid.base.ExtendCordovaActivity;
-import com.jmengxy.cordovadroid.definitions.WebPagePath;
 
 public class IndexActivity extends ExtendCordovaActivity {
 
@@ -302,6 +276,138 @@ document.addEventListener("deviceready", onDeviceReady, false);
 - Run project and click button in MainActivity, you can see:
 
 ![]({{ "/assets/img/cordova-plugin-dialogs.webp" | absolute_url }})
+
+## Write plugin
+
+We'll write a plugin to let web part get App name.
+
+### Native part
+
+Create class **org.apache.cordova.appinfo.AppInfo**.
+
+{% highlight java %}
+
+public class AppInfo extends CordovaPlugin {
+
+    private static final String LOG_TAG = "AppInfo";
+
+    @Override
+    public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        if (this.cordova.getActivity().isFinishing()) return true;
+
+        if (action.equals("getAppInfo")) {
+            getAppInfo(callbackContext);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void getAppInfo(final CallbackContext callbackContext) {
+        cordova.getThreadPool().execute(() -> {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("name", cordova.getContext().getString(R.string.app_name));
+                jsonObject.put("versionName", BuildConfig.VERSION_NAME);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            callbackContext.sendPluginResult(
+                    new PluginResult(
+                            PluginResult.Status.OK, jsonObject));
+        });
+    }
+}
+
+{% endhighlight %}
+
+Add a new feature in **res/xml/index.xml**.
+
+{% highlight xml %}
+
+<feature name="AppInfo">
+    <param name="android-package" value="org.apache.cordova.appinfo.AppInfo" />
+</feature>
+
+{% endhighlight %}
+
+### Web part
+
+Add a new plugin **assets/www/plugins/cordova-plugin-appinfo/www/appinfo.js**
+
+{% highlight javascript %}
+
+cordova.define("cordova-plugin-appinfo.appinfo", function(require, exports, module) {
+
+var argscheck = require('cordova/argscheck');
+var channel = require('cordova/channel');
+var utils = require('cordova/utils');
+var exec = require('cordova/exec');
+var cordova = require('cordova');
+
+channel.createSticky('onCordovaInfoReady');
+// Tell cordova channel to wait on the CordovaInfoReady event
+channel.waitForInitialization('onCordovaInfoReady');
+
+class AppInfo {
+    constructor() {
+        this.name = undefined;
+        this.versionName = undefined;
+        this.init()
+    }
+
+    init() {
+        let _this = this;
+        channel.onCordovaReady.subscribe(() => {
+                    _this.getInfo(info => {
+                        _this.name = info.name;
+                        _this.versionName = info.versionName;
+                        channel.onCordovaInfoReady.fire();
+                    });
+                }, null);
+    }
+
+    getInfo(successCallback, errorCallback) {
+        exec(successCallback, errorCallback, 'AppInfo', 'getAppInfo');
+    }
+}
+
+module.exports = new AppInfo();
+
+});
+
+{% endhighlight %}
+
+Modify **assets/www/cordova_plugins.js** to register the plugin:
+
+{% highlight javascript %}
+
+{
+  "id": "cordova-plugin-appinfo.appinfo",
+  "file": "plugins/cordova-plugin-appinfo/www/appinfo.js",
+  "pluginId": "cordova-plugin-appinfo",
+  "merges": [
+    "navigator.appinfo"
+  ]
+}
+
+{% endhighlight %}
+
+Modify **assets/www/notification.js** to show AppInfo:
+
+{% highlight javascript %}
+
+function onDeviceReady() {
+    navigator.notification.alert(navigator.appinfo.versionName, function() {}, navigator.appinfo.name, 'CLICK');
+}
+document.addEventListener("deviceready", onDeviceReady, false);
+
+{% endhighlight %}
+
+Run App, you'll got:
+
+![]({{ "/assets/img/cordova-plugin-appinfo.webp" | absolute_url }})
 
 ## Proguard
 
