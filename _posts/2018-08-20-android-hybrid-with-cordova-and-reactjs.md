@@ -137,7 +137,7 @@ public class ReactActivity extends ExtendCordovaActivity {
 
 - Go to App project directory and execute `python3 android-tools.py`, select build -> qa -> debug (type 1,1,1). The script starts to build ReactJS project and Native App, then upload generated web files to SD card.
 
-- Run App from Android Studio, click **REACT** button. You would got following image.
+- Run App from Android Studio, click **REACT** button. You would get following page.
 
 ![]({{ "/assets/img/cordova-react-js.webp" | absolute_url }})
 
