@@ -141,6 +141,8 @@ public class ReactActivity extends ExtendCordovaActivity {
 
 ![]({{ "/assets/img/cordova-react-js.webp" | absolute_url }})
 
+[Github Repo](https://github.com/jie-meng/CordovaDroid)
+
 ## References
 
 [ReactJS](https://reactjs.org/)
