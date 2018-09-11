@@ -72,10 +72,12 @@ The MongoDB server is now configured and running, and you can manage the MongoDB
 
 ## Connect mongod
 
-You can now connect mongod service on EC2 from terminal on your PC with command: `mongo --host {ec2 public IP}:27017`.
+You can now connect mongod service on EC2 from terminal on your PC with command: `mongo --host {ec2 public IP}`
 
 ## References
 
 [install-mongodb-on-ubuntu](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
 [How to Install MongoDB on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-16-04)
+
+[MongoDB: exception in initAndListen: 20 Attempted to create a lock file on a read-only directory: /data/db, terminating](https://stackoverflow.com/questions/42446931/mongodb-exception-in-initandlisten-20-attempted-to-create-a-lock-file-on-a-rea/43347884)
