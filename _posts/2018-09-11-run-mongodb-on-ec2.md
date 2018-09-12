@@ -72,7 +72,7 @@ The MongoDB server is now configured and running, and you can manage the MongoDB
 
 ## Connect mongod
 
-You can now connect mongod service on EC2 from terminal on your PC with command: `mongo --host {ec2 public IP}`
+You can now connect mongod service on EC2 from terminal on your PC with command: `mongo --host {ec2 public IP}:{port}`.
 
 ## References
 
