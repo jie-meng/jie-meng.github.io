@@ -32,13 +32,16 @@ After=network.target
 [Service]
 User=ubuntu
 ExecStart=/usr/bin/mongod --quiet --bind_ip_all --dbpath /home/ubuntu/data/db
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
 
 {% endhighlight %}
 
-(Without **--bind_ip_all**, you cannot access mongodb cross internet)
+Without **--bind_ip_all**, you cannot access mongodb cross internet.
+
+**Restart=always** restarts mongod whenever it be killed or exit with an exception.
 
 Next, start MongoDB with systemctl.
 
