@@ -155,7 +155,7 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST := \
 
 ## How to replace default launcher with customized launcher
 
-### Find default launcher of AOSP.
+### Find default launcher of AOSP
 
 Launcher is also a pre-install app, so we can find it under _AOSP_WORKSPACE/packages/apps/_.
 
