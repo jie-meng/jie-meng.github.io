@@ -31,7 +31,7 @@ from datetime import datetime
 
 print('Please input output generated within minutes:')
 withInMins = int(input())
-print('Find ouput files in {0} minutes ...'.format(withInMins))
+print('Find output files in {0} minutes ...'.format(withInMins))
 
 # excludeSet
 excludeSet = set()
