@@ -19,7 +19,7 @@ For example, if you modified _/frameworks/base/core/res/res/values/dimens.xml_, 
 
 After build, you'll see `[100% 8/8] Install: out/target/product/generic_x86/system/framework/framework-res.apk`, then push _framework-res.apk_ to emulator path _/system/framework/_. Restart emulator.
 
-You put this script `push_build_output.py` to _AOSP_WORKSPACE/out/generic_x86/_ and run by _python3_, you will be asked to input build minutes, script with which to find newest build outputs. After confirm, script will push all output files to emulator. Then restart emulator.
+You put this script `push_build_output.py` to _AOSP_WORKSPACE/out/generic_x86/_ and run by _python3_, you will be asked to input output generated within minutes, script with which to find newest build outputs. After confirm, script will push all output files to emulator. Then restart emulator.
 
 {% highlight python %}
 
