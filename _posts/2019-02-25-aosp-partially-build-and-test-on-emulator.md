@@ -29,9 +29,9 @@ import os
 import os.path
 from datetime import datetime
 
-print('Please input build minutes:')
+print('Please input output generated within minutes:')
 withInMins = int(input())
-print(withInMins)
+print('Find ouput files in {0} minutes ...'.format(withInMins))
 
 # excludeSet
 excludeSet = set()
