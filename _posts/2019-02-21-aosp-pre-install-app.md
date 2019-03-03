@@ -21,8 +21,6 @@ __target__: aosp_x86-eng
 
 __device__: emulator
 
-(Current newest version is Android 9.0.0)
-
 Init env every time open a new terminal:
 
 {% highlight shell %}
