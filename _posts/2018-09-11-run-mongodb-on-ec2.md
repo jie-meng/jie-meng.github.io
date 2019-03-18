@@ -2,7 +2,7 @@
 title: Run mongodb on ec2
 layout: post
 date: 2018-09-11 09:13:34 +0800
-categories: backend
+categories: ops
 ---
 
 ## Install mongodb
