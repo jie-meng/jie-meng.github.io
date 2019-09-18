@@ -91,8 +91,14 @@ This is a sample deploy script of target machine which matches above execute she
 
 {% highlight shell %}
 
+# param1: env (prod|stg|qa|local)
+# param2: build_number (1|2|3...)
+
 sudo docker pull docker-registry.domain.net/my-server-$1:$2
 sudo docker container stop $(sudo docker ps -f name=my-server -q)
+
+set -e
+
 sudo docker run --name my-server --rm -d -p 8080:8080 docker-registry.domain.net/my-server-$1:$2 $1
 sudo docker system prune -a # save disk volume for server
 
