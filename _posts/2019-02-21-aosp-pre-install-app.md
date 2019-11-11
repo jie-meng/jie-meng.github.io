@@ -212,9 +212,9 @@ include $(BUILD_PREBUILT)
 
 ## Clean
 
-If you remove pre install app, you nedd to run `make installclean` before `make`.
+If you remove pre install app, you need to run `make installclean` before `make`.
 
-If you want to clear app data, you nedd to run `make dataclean` before `make`.
+If you want to clear app data, you need to run `make dataclean` before `make`.
 
 ## References
 
