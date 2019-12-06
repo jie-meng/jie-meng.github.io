@@ -84,3 +84,9 @@ You can now connect mongod service on EC2 from terminal on your PC with command:
 [How to Install MongoDB on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-16-04)
 
 [MongoDB: exception in initAndListen: 20 Attempted to create a lock file on a read-only directory: /data/db, terminating](https://stackoverflow.com/questions/42446931/mongodb-exception-in-initandlisten-20-attempted-to-create-a-lock-file-on-a-rea/43347884)
+
+[mongodb：设置并使用账号密码登录](https://amberwest.github.io/2018/06/14/mongodb%EF%BC%9A%E8%AE%BE%E7%BD%AE%E5%B9%B6%E4%BD%BF%E7%94%A8%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/)
+
+[给你的mongodb设置密码](https://segmentfault.com/a/1190000011554055)
+
+[MongoDB 用户名密码登录](https://www.jianshu.com/p/79caa1cc49a5)
