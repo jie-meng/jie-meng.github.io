@@ -38,7 +38,7 @@ _package.json_
         "start": "node_modules/db-migrate/bin/db-migrate up && node src/main.js",
         "migrate-up": "node_modules/db-migrate/bin/db-migrate up",
         "migrate-down": "node_modules/db-migrate/bin/db-migrate down",
-      },
+    },
     "dependencies": {
         "mysql": "^2.17.1",
         "db-migrate": "^0.11.6",
