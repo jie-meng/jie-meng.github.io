@@ -1,7 +1,7 @@
 ---
-title: Use nvim in Unity3d on MacOS
+title: Use MacVim in Unity3d
 layout: post
-date: 2021-01-22 16:31:00 +0800
+date: 2021-01-22 20:05:00 +0800
 
 categories: unity3D
 ---
@@ -12,11 +12,11 @@ Clone [omnisharp-roslyn](https://github.com/OmniSharp/omnisharp-roslyn)
 
 Use command `./build.sh` to compile omnisharp-roslyn server (omnisharp-roslyn will be compiled with local environment mono)
 
-## nvim settings
+## .vimrc settings
 
-Create `~/.config/nvim/omnisharp.config.vim`
+Add `Plug 'prabirshrestha/asyncomplete.vim'` and `Plug 'OmniSharp/omnisharp-vim'` in .vimrc and do :PlugInstall
 
-Copy the following script to omnisharp.config.vim.
+Copy the following script to .vimrc
 
 Don't forget to change the value of `let g:OmniSharp_server_path = ''` to the absolute path of OmniSharp.exe which built just now.
 
@@ -77,27 +77,25 @@ augroup END
 
 {% endhighlight %}
 
-Add following lines to `~/.config/nvim/init.vim`.
+If you have ale plugin installed, make sure to set ale_linters with OmniSharp, otherwise you'll got many lint errors.
 
 {% highlight vimscript %}
 
-Plug 'OmniSharp/omnisharp-vim'
-
-source ~/.config/nvim/omnisharp.config.vim
+"" only enable these linters
+ let g:ale_linters = {
+ \    'javascript': ['eslint'],
+ \    'cs': ['OmniSharp']
+ \}
 
 {% endhighlight %}
 
-Run `nvim`, execute `:PlugInstall` to install omnisharp-vim plugin.
+## Unity3D development in MacVim
 
-## Unity3D development in nvim
-
-- Run nvim from the directory _{project_dir}/Assets/Scripts/_.
+- Set Unity3D Preferences -> External Tools -> External Script Editor to MacVim.
 
 - Create/Delete/Rename/Move C# script files from Unity3D Editor (Which will handle the .meta files).
 
-- After operation of script files in Unity3D, Go to Preferences -> External Tools and Click __Regenerate project files__ to update the sln and csproj file.
-
-- Use `<space>rs` in nvim to restart omnisharp server, which will reload sln and csproj files.
+- Double click C# script in Unity3D project view to open MacVim for development.
 
 
 ## Reference
