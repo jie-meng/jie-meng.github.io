@@ -80,7 +80,17 @@ augroup END
 
 {% endhighlight %}
 
-Add `source ~/.config/nvim/omnisharp.config.vim` in `init.vim`
+Add following lines to `~/.config/nvim/init.vim`.
+
+{% highlight vimscript %}
+
+Plug 'OmniSharp/omnisharp-vim'
+
+source ~/.config/nvim/omnisharp.config.vim
+
+{% endhighlight %}
+
+Run `nvim`, execute `:PlugInstall` to install omnisharp-vim plugin.
 
 ## Unity3D development in nvim
 
