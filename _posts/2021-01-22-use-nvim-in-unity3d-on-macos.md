@@ -114,3 +114,5 @@ Run `nvim`, execute `:PlugInstall` to install omnisharp-vim plugin.
 [Unity3D Command line arguments](https://docs.unity3d.com/Manual/CommandLineArguments.html)
 
 [Issue: Doesn't download OmniSharp-Roslyn before trying to start on macOS](https://github.com/OmniSharp/omnisharp-vim/issues/506)
+
+[coc-omnisharp](https://github.com/coc-extensions/coc-omnisharp)
