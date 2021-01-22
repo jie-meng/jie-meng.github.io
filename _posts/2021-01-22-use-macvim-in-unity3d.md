@@ -91,7 +91,9 @@ If you have ale plugin installed, make sure to set ale_linters with OmniSharp, o
 
 ## Unity3D development in MacVim
 
-- Set Unity3D Preferences -> External Tools -> External Script Editor to MacVim.
+- Right click *.cs file from the Finder, select "Open With" -> "MacVim" as the default Editor in your system.
+
+- Set Unity3D Preferences -> External Tools -> External Script Editor to "Open by file extension".
 
 - Create/Delete/Rename/Move C# script files from Unity3D Editor (Which will handle the .meta files).
 
