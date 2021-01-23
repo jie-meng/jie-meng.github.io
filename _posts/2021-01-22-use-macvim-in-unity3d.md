@@ -99,6 +99,27 @@ If you have ale plugin installed, make sure to set ale_linters with OmniSharp, o
 
 - Double click C# script in Unity3D project view to open MacVim for development.
 
+If you don't want to set MacVim as system default editor. You can also set _MacVim.app_ as Unity3D default editor. But if you double-click scripts in Unity3D project view multiple times, Unity3D will create multiple MacVim applications (You'll see them while pressing Command + Tab).
+
+That's what we don't want to see. We only want to have one MacVim application when press Command + Tab and can switch workspaces with Command + ~. The following steps can help.
+
+- Create a bash script _open_macvim.sh_ which start MacVim. Its content can simply be `mvim $@`
+
+- Download [appify](https://gist.github.com/mathiasbynens/674099) script.
+
+- Type the following commands:
+
+{% highlight shell %}
+
+chmod a+x appify
+chmod a+x open_macvim.sh
+./applify open_macvim.sh "open_macvim"
+
+{% endhighlight %}
+
+- Then you'll get an _open_macvim.app_
+
+- Select open_macvim.app from Unity3D as default editor.
 
 ## Reference
 
@@ -113,3 +134,5 @@ If you have ale plugin installed, make sure to set ale_linters with OmniSharp, o
 [Issue: Doesn't download OmniSharp-Roslyn before trying to start on macOS](https://github.com/OmniSharp/omnisharp-vim/issues/506)
 
 [coc-omnisharp](https://github.com/coc-extensions/coc-omnisharp)
+
+[Unity opens multiple workspaces when using VSCode as editor](https://stackoverflow.com/questions/49550056/unity-opens-multiple-workspaces-when-using-vscode-as-editor)
