@@ -3,7 +3,7 @@ title: Use nvim in Unity3d on MacOS
 layout: post
 date: 2021-01-22 16:31:00 +0800
 
-categories: unity3D
+categories: unity3d
 ---
 
 ## Compile omnisharp-roslyn server

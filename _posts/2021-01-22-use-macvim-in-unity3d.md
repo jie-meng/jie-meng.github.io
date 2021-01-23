@@ -3,7 +3,7 @@ title: Use MacVim in Unity3d
 layout: post
 date: 2021-01-22 20:05:00 +0800
 
-categories: unity3D
+categories: unity3d
 ---
 
 ## Compile omnisharp-roslyn server
